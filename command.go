@@ -16,6 +16,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"time"
 )
 
 // New is the recommended way to return a new yt-dlp command builder. Once all
@@ -281,6 +282,7 @@ func (c *Command) runWithResult(ctx context.Context, cmd *exec.Cmd) (*Result, er
 	cmd.Stderr = stderr
 
 	applySyscall(cmd, c.separateProcessGroup)
+	cmd.WaitDelay = 1 * time.Second
 
 	debug(
 		ctx, "running command",
